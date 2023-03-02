@@ -3,6 +3,7 @@
   "displayName": "extend_code",
   "description": "extendcode",
   "version": "0.0.1",
+  "repository":"https://github.com/wujiyu115/extendcode",
   "engines": {
     "vscode": "^1.75.0"
   },
