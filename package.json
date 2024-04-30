@@ -56,13 +56,13 @@
               "when": "editorHasSelection",
               "command": "extendcode.wrapLog",
               "alt": "extendcode.wrapLog",
-              "group": "navigation"
+              "group": "navigation@1"
             },
             {
                 "when": "editorHasSelection",
                 "command": "extendcode.wrapCode",
                 "alt": "extendcode.wrapCode",
-                "group": "navigation"
+                "group": "navigation@2"
             }
         ]
     },
