@@ -98,10 +98,24 @@ function insertWrapText(editor: vscode.TextEditor, wrapstr: string, processSelec
     });
 }
 
-function getCurrentLineIndent(editor: vscode.TextEditor): string {
-    const currentLine = editor.document.lineAt(editor.selection.active.line);
+function getLineSpace(editor: vscode.TextEditor, line: number) {
+    const currentLine = editor.document.lineAt(line);
     const matchArr = currentLine.text.match(/^\s+/);
     return matchArr ? matchArr[0] : "";
+}
+
+function isEmpty(str: string | null | undefined): boolean {
+    return !str;
+}
+
+function getCurrentLineIndent(editor: vscode.TextEditor): string {
+    const currentLine = editor.selection.active.line;
+    let matchStr = getLineSpace(editor, currentLine)
+    if (isEmpty(matchStr)) {
+        const nextLine = editor.selection.active.line + 1;
+        matchStr = getLineSpace(editor, nextLine)
+    }
+    return matchStr
 }
 
 export function activate(context: vscode.ExtensionContext) {
