@@ -18,7 +18,9 @@ function nameAndParams(luaCode: string): NameAndParamsResult {
     const matchResult: RegExpMatchArray | null = luaCode.match(matchPattern);
     if (matchResult) {
         functionName = matchResult[2]; // 函数名
-        params = matchResult[3].split(',').map(param => param.trim()); // 参数列表
+        // 调整参数分割逻辑
+        // 现在需要更聪明地分割参数，考虑到可能存在的`.`连接
+        params = matchResult[3].split(',').map(param => param.trim()).filter(param => param !== '');
     } else {
         // 对于纯参数列表，我们可以单独处理
         const paramMatchResult: RegExpMatchArray | null = luaCode.match(paramOnlyPattern);
@@ -30,7 +32,7 @@ function nameAndParams(luaCode: string): NameAndParamsResult {
             if (matchParamResult) {
                 params = [matchParamResult[1].trim()];
             } else {
-                console.log('没有匹配到符合要求的Lua函数调用或参数列表。');
+                params = [luaCode]
             }
         }
     }
@@ -39,7 +41,7 @@ function nameAndParams(luaCode: string): NameAndParamsResult {
 
 function logWithParams(logLevel:string, baseName: string, functionName: string, params: string[]): string {
     let func = functionName ? `.${functionName}` : '';
-    const message = `${logLevel}("${baseName}${func}: ${params.map(p => `{${p}}`).join(' ')}", ${params.join(', ')})`;
+    const message = `${logLevel}("${baseName}${func}: ${params.map(p => `{${p.split('.').pop()}}`).join(' ')}", ${params.join(', ')})`;
     return message;
 }
 
