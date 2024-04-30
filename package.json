@@ -3,7 +3,7 @@
   "displayName": "extend_code",
   "description": "extendcode",
   "publisher": "wujiyu115",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository":"https://github.com/wujiyu115/extendcode",
   "engines": {
     "vscode": "^1.75.0"
@@ -16,6 +16,10 @@
   "contributes": {
     "commands": [
       {
+        "command": "extendcode.wrapLog",
+        "title": "wrapLog"
+      },
+      {
         "command": "extendcode.wrapCode",
         "title": "wrapCode"
       }
@@ -24,6 +28,21 @@
         "type": "object",
         "title": "extendcode",
         "properties": {
+            "extendcode.wraplog_flag": {
+                "type": "string",
+                "default": true,
+                "description": "open wrap log"
+            },
+            "extendcode.wraplog_str": {
+              "type": "string",
+              "default": "logD",
+              "description": "wrap log string"
+            },
+            "extendcode.wrapcode_flag": {
+              "type": "boolean",
+              "default": true,
+              "description": "open wrap code"
+            },
             "extendcode.wrapstr": {
                 "type": "string",
                 "default": "log(\"log something: \\{${selectedText}\\}\", ${selectedText})",
@@ -33,6 +52,12 @@
     },
     "menus": {
         "editor/context": [
+            {
+              "when": "editorHasSelection",
+              "command": "extendcode.wrapLog",
+              "alt": "extendcode.wrapLog",
+              "group": "navigation"
+            },
             {
                 "when": "editorHasSelection",
                 "command": "extendcode.wrapCode",
